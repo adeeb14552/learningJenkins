@@ -1,10 +1,9 @@
 pipeline {
     agent { 
-        docker {
-            image 'python:3.11'
+        node {
             label 'docker-python-agent'
-        }
-    }
+            }
+      }
     triggers {
     	pollSCM '* * * * *'
     }  
@@ -14,8 +13,6 @@ pipeline {
                 echo "Building.."
                 sh '''
                 cd myapp
-                python3 -m venv env
-                source env/bin/activate
                 pip install -r requirements.txt
                 '''
             }
@@ -25,7 +22,6 @@ pipeline {
                 echo "Testing.."
                 sh '''
                 cd myapp
-                source env/bin/activate
                 python3 hello.py
                 python3 hello.py --name=Adeeb
                 '''
